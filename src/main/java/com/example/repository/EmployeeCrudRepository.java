@@ -16,4 +16,6 @@ public interface EmployeeCrudRepository extends CrudRepository<Employee,Long> {
     @Modifying
     @Query("UPDATE Employee e SET e.name = :newName WHERE e.id = :id")
     void updateEmployeeNameById(Long id, String newName);
+    
+    Iterable<Long> findAllIds();
 }

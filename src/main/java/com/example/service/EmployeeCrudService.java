@@ -13,22 +13,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.example.exception.EmployeeNotFoundException;
+import com.example.exception.GlobalException;
+import com.example.exception.NullObject;
 import com.example.model.Employee;
 import com.example.repository.EmployeeCrudRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EmployeeCrudService {
    
     @Autowired
     EmployeeCrudRepository employeeCrudRepository;
     
     public ResponseEntity<Employee> savEmployeeData(Employee employeeEntity){
+       if(employeeEntity==null){
+         throw new NullObject("Object is null");
+       }
        Employee e= employeeCrudRepository.save(employeeEntity);
     return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Void> updateEmployee(Long id ,String newName){
+      if(id==0){
+         throw new EmployeeNotFoundException("Id is not present in db");
+      }
        employeeCrudRepository.updateEmployeeNameById(id,newName);
        return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -40,6 +53,14 @@ public class EmployeeCrudService {
     }
 
     public ResponseEntity<Void> deleteEmployee(Long id){
+
+         if(id==0){
+
+           throw new EmployeeNotFoundException("Employee is not present in db");
+   
+         }
+
+        log.info("Employee with "+ id + " is succesfully deleted");
         employeeCrudRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

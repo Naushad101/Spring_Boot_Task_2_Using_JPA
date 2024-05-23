@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.example.model.Employee;
 import com.example.repository.EmployeeRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EmployeeService {
     
     @Autowired
