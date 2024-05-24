@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.exception.EmployeeNotFoundException;
+import com.example.exception.NullObject;
 import com.example.model.Employee;
 import com.example.repository.EmployeeRepository;
 
@@ -18,11 +20,17 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     public Employee savEmployeeData(Employee employeeEntity){
+        if(employeeEntity==null){
+            throw new NullObject("The value of obj is null");
+        }
         return employeeRepository.save(employeeEntity);
     }
 
-    public void updateEmployee(Long id ,String newName){
-        employeeRepository.updateEmployeeNameById(id, newName);
+    public Employee updateEmployee(Long id ,String newName){
+        if(id==0){
+            throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
+        }
+       return employeeRepository.updateEmployeeNameById(id, newName);
     }
 
     public List<Employee> getAllEmployee(){
@@ -30,6 +38,9 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id){
+        if(id==0){
+            throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
+        }
         employeeRepository.deleteById(id);
     }
 

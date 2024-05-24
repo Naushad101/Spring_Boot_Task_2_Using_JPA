@@ -28,8 +28,8 @@ public class EmployeeController {
 
 
     @PutMapping("/employee")
-    public void updateEmployee(@RequestParam("id") Long id,@RequestParam("newName") String newName){
-        employeeService.updateEmployee(id, newName);
+    public Employee updateEmployee(@RequestParam("id") Long id,@RequestParam("newName") String newName){
+        return employeeService.updateEmployee(id, newName);
     }
 
     @GetMapping("/employee")
