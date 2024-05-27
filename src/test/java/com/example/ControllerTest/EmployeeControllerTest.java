@@ -1,6 +1,8 @@
 package com.example.ControllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -40,10 +42,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void updateEmployeeTest(){
-        Employee employee = new Employee(1L,"sam","devloper","bnt");
-        when(employeeService.updateEmployee(1L, "sam")).thenReturn(employee);
-        Employee employee2 = employeeController.updateEmployee(1L, "sam");
-        assertEquals(employee, employee2);
+        employeeController.updateEmployee(1L, "Tom");
+        verify(employeeService,times(1)).updateEmployee(1L, "Tom");
     }
 
     @Test
@@ -62,5 +62,12 @@ public class EmployeeControllerTest {
         when(employeeService.getAllEmployee()).thenReturn(employees);
         List<Employee> employees2 = employeeController.getAllEmployee();
         assertEquals(employees, employees2);
+    }
+
+    @Test
+    public void deleteEmployee(){
+        Long id=1L;
+        employeeController.deleteEmpoyee(id);
+        verify(employeeService,times(1)).deleteEmployee(id);
     }
 }

@@ -34,14 +34,16 @@ public class EmployeeCrudService {
        if(employeeEntity==null){
          throw new NullObject("Object is null");
        }
+       log.info("Employee",employeeEntity," is Successfully saved in db");
        Employee e= employeeCrudRepository.save(employeeEntity);
     return new ResponseEntity<>(e, HttpStatus.CREATED);
     }
 
     public ResponseEntity<Void> updateEmployee(Long id ,String newName){
-      if(id==0){
+      if(!employeeCrudRepository.findAllId().contains(id)){
          throw new EmployeeNotFoundException("Id is not present in db");
       }
+      log.info("Employee with id ",id," is successfully updated");
        employeeCrudRepository.updateEmployeeNameById(id,newName);
        return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -54,7 +56,7 @@ public class EmployeeCrudService {
 
     public ResponseEntity<Void> deleteEmployee(Long id){
 
-         if(id==0){
+         if(!employeeCrudRepository.findAllId().contains(id)){
 
            throw new EmployeeNotFoundException("Employee is not present in db");
    

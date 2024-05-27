@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Employee;
 import com.example.service.EmployeeService;
+
+import io.swagger.v3.oas.annotations.Hidden;
 
 @RestController
 public class EmployeeController {
@@ -28,8 +31,8 @@ public class EmployeeController {
 
 
     @PutMapping("/employee")
-    public Employee updateEmployee(@RequestParam("id") Long id,@RequestParam("newName") String newName){
-        return employeeService.updateEmployee(id, newName);
+    public void updateEmployee(@RequestParam("id") Long id,@RequestParam("newName") String newName){
+        employeeService.updateEmployee(id, newName);
     }
 
     @GetMapping("/employee")

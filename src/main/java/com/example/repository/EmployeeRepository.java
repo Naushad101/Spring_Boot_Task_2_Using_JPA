@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.model.Employee;
 
 import jakarta.transaction.Transactional;
+import java.util.*;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
@@ -15,5 +16,8 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Employee e SET e.name = :newName WHERE e.id = :id")
-    Employee updateEmployeeNameById(Long id, String newName);
+    void updateEmployeeNameById(Long id, String newName);
+
+    @Query("SELECT e.id FROM Employee e")
+    List<Long> findAllId();
  }

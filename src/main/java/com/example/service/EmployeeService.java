@@ -23,14 +23,16 @@ public class EmployeeService {
         if(employeeEntity==null){
             throw new NullObject("The value of obj is null");
         }
+        log.info("Employee ",employeeEntity,"is successfully saved in db");
         return employeeRepository.save(employeeEntity);
     }
 
-    public Employee updateEmployee(Long id ,String newName){
-        if(id==0){
+    public void updateEmployee(Long id ,String newName){
+        if(!employeeRepository.findAllId().contains(id)){
             throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
         }
-       return employeeRepository.updateEmployeeNameById(id, newName);
+        log.info("Employee with id ",id," is successfully updated");
+        employeeRepository.updateEmployeeNameById(id, newName);
     }
 
     public List<Employee> getAllEmployee(){
@@ -38,9 +40,10 @@ public class EmployeeService {
     }
 
     public void deleteEmployee(Long id){
-        if(id==0){
+        if(!employeeRepository.findAllId().contains(id)){
             throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
         }
+        log.info("Employee with id ",id," is successfully deleted");
         employeeRepository.deleteById(id);
     }
 
