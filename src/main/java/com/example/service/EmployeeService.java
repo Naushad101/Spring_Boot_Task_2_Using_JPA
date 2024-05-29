@@ -28,7 +28,7 @@ public class EmployeeService {
     }
 
     public void updateEmployee(Long id ,String newName){
-        System.out.println("Udating....");
+        System.out.println("Inside UpdateEMployee Method");
         if(!employeeRepository.findAllId().contains(id)){
             throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
         }
@@ -37,6 +37,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployee(){
+        System.out.println("Inside getAllEmployee Method");
         return employeeRepository.findAll();
     }
 
