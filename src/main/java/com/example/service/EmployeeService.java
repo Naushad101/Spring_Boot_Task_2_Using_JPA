@@ -28,10 +28,11 @@ public class EmployeeService {
     }
 
     public void updateEmployee(Long id ,String newName){
+        System.out.println("Udating....");
         if(!employeeRepository.findAllId().contains(id)){
             throw new EmployeeNotFoundException("Id "+ id +" is not present in db");
         }
-        log.info("Employee with id ",id," is successfully updated");
+       log.info("Employee with id ",id," is successfully updated");
         employeeRepository.updateEmployeeNameById(id, newName);
     }
 
